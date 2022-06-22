@@ -9,7 +9,7 @@ const linRequest = new LinRequest({
     requestInterceptor: (config) => {
       // 携带token的拦截
       const token = ''
-      if (token) {
+      if (token && config && config.headers) {
         config.headers.Authorization = `Bearer ${token}`
       }
 
