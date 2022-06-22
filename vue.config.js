@@ -7,6 +7,7 @@ const path = require('path')
 module.exports = {
   //直接通过CLI提供给我们的选项来配置
   outputDir: './build',
+  // publicPath: './',
   //配置方式2，和webpack属性完全一致，最后会进行合并
   // configureWebpack: {
   //   resolve: {
