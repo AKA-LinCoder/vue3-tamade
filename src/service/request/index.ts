@@ -5,6 +5,7 @@ import type { HYRequestInterceptors, HYRequestConfig } from './type'
 import { ElLoading } from 'element-plus'
 import { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
 
+
 const DEAFULT_LOADING = true
 
 class LinRequest {

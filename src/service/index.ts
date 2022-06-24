@@ -1,6 +1,7 @@
 // service统一出口
 import LinRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
+import localCahce from '@/utils/cache'
 
 const linRequest = new LinRequest({
   baseURL: BASE_URL,
@@ -8,7 +9,7 @@ const linRequest = new LinRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = ''
+      const token = localCahce.getCahce('token')
       if (token && config && config.headers) {
         config.headers.Authorization = `Bearer ${token}`
       }

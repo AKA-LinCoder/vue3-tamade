@@ -7,6 +7,18 @@ const path = require('path')
 module.exports = {
   //直接通过CLI提供给我们的选项来配置
   outputDir: './build',
+  //解决跨域问题
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: '',
+        pathRewrite: {
+          '^/api': ''
+        },
+        changeOrigin: true
+      }
+    }
+  },
   // publicPath: './',
   //配置方式2，和webpack属性完全一致，最后会进行合并
   // configureWebpack: {
