@@ -9,7 +9,7 @@ const linRequest = new LinRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = localCahce.getCahce('token')
+      const token = localCahce.getCache('token')
       if (token && config && config.headers) {
         config.headers.Authorization = `Bearer ${token}`
       }

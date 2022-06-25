@@ -2,9 +2,10 @@ import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { HYRequestInterceptors, HYRequestConfig } from './type'
 
-import { ElLoading } from 'element-plus'
+// import { ElLoading } from 'element-plus'
 import { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
-
+import { ElLoading } from 'element-plus/es'
+// import { ElLoading } from 'element-plus'
 
 const DEAFULT_LOADING = true
 

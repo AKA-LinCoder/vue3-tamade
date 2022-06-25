@@ -11,7 +11,7 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        target: '',
+        target: 'http://152.136.185.210:5000',
         pathRewrite: {
           '^/api': ''
         },
@@ -21,13 +21,13 @@ module.exports = {
   },
   // publicPath: './',
   //配置方式2，和webpack属性完全一致，最后会进行合并
-  // configureWebpack: {
-  //   resolve: {
-  //     alias: {
-  //       views: '@/views'
-  //     }
-  //   }
-  // }
+  configureWebpack: {
+    resolve: {
+      alias: {
+        views: '@/views'
+      }
+    }
+  }
   //通过configureWebpack修改webpack的配置
   // configureWebpack: (config) => {
   //   config.resolve.alias = {
@@ -36,9 +36,9 @@ module.exports = {
   //   }
   // },
   //配置方式3
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'))
-      .set('views', '@/views')
-  }
+  // chainWebpack: (config) => {
+  //   config.resolve.alias
+  //     .set('@', path.resolve(__dirname, 'src'))
+  //     .set('views', '@/views')
+  // }
 }

@@ -3,7 +3,7 @@ class LocalCache {
     window.localStorage.setItem(key, JSON.stringify(value))
   }
 
-  getCahce(key: string) {
+  getCache(key: string) {
     const value = window.localStorage.getItem(key)
     if (value) {
       return JSON.parse(value)
