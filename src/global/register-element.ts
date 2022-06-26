@@ -16,8 +16,21 @@ import {
   ElContainer,
   ElMenu,
   ElSubMenu,
-  ElMenuItem
+  ElIcon,
+  ElMenuItem,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElAvatar,
+  ElCol,
+  ElOption,
+  ElRow,
+  ElSelect,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from 'element-plus/lib/index'
+import { Fold, Expand } from '@element-plus/icons-vue'
 
 const components = [
   ElButton,
@@ -35,7 +48,22 @@ const components = [
   ElContainer,
   ElMenu,
   ElSubMenu,
-  ElMenuItem
+  ElMenuItem,
+  ElIcon,
+  Fold,
+  Expand,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElAvatar,
+  ElCol,
+  ElOption,
+  ElRadio,
+  ElRow,
+  ElSelect,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 export default function (app: App): void {

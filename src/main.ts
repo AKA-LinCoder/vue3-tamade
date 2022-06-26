@@ -9,9 +9,8 @@ import { setupStore } from './store'
 
 const app = createApp(App)
 registerApp(app)
-app.use(router)
 app.use(store)
 setupStore()
-app.mount('#app')
+app.use(router)
 
-console.log(process.env.VUE_APP_BASE_URL)
+app.mount('#app')
