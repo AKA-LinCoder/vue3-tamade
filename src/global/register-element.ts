@@ -30,7 +30,9 @@ import {
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElTableColumn,
-  ElTable
+  ElTable,
+  ElPagination,
+  ElConfigProvider
 } from 'element-plus/lib/index'
 import { Fold, Expand } from '@element-plus/icons-vue'
 
@@ -67,7 +69,9 @@ const components = [
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElTableColumn,
-  ElTable
+  ElTable,
+  ElPagination,
+  ElConfigProvider
 ]
 
 export default function (app: App): void {
