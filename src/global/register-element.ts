@@ -28,7 +28,9 @@ import {
   ElSelect,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTableColumn,
+  ElTable
 } from 'element-plus/lib/index'
 import { Fold, Expand } from '@element-plus/icons-vue'
 
@@ -63,7 +65,9 @@ const components = [
   ElSelect,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTableColumn,
+  ElTable
 ]
 
 export default function (app: App): void {
