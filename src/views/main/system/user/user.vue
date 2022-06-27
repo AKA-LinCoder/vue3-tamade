@@ -1,8 +1,8 @@
 <template>
   <div class="user">
     <pageSearch :search-form-config="searchFormConfig"></pageSearch>
-    <page-content page-name="user" :content-table-config="contentTableConfig">
-    </page-content>
+    <pageContent page-name="users" :content-table-config="contentTableConfig">
+    </pageContent>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import pageSearch from '@/components/page-search'
 import pageContent from '@/components/page-content'
 
 export default defineComponent({
-  name: 'user',
+  name: 'users',
   components: { pageSearch, pageContent },
   setup() {
     return {
@@ -26,11 +26,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less">
-.user {
-  .content {
-    padding: 20px;
-    border-top: 20px solid #f5f5f5;
-  }
-}
-</style>
+<style scoped lang="less"></style>

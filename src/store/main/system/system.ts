@@ -15,47 +15,67 @@ const systemModule: Module<ISystemState, IRootState> = {
     }
   },
   mutations: {
-    changeUserList(state, userList: any[]) {
+    changeUsersList(state, userList: any[]) {
       state.usersList = userList
     },
-    changeUserCount(state, userCount: number) {
+    changeUsersCount(state, userCount: number) {
       state.usersCount = userCount
     },
-    changeRoleList(state, roleList: any[]) {
-      state.roleList = roleList
+    changeRoleList(state, list: any[]) {
+      state.roleList = list
     },
-    changeRoleCount(state, roleCount: number) {
-      state.roleCount = roleCount
+    changeRoleCount(state, count: number) {
+      state.roleCount = count
+    }
+  },
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`]
+        // switch (pageName) {
+        //   case 'users':
+        //     return state.usersList
+        //   case 'role':
+        //     return state.roleList
+        // }
+      }
     }
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
-      const pageName: string = payload.pageName
-      let pageUrl = ''
-      switch (pageName) {
-        case 'user':
-          pageUrl = 'users/list'
-          break
-        case 'role':
-          pageUrl = 'role/list'
-          break
-      }
+      // 1.获取pageUrl
+      const pageName = payload.pageName
+      const pageUrl = `/${pageName}/list`
+      // switch (pageName) {
+      //   case 'users':
+      //     pageUrl = '/users/list'
+      //     break
+      //   case 'role':
+      //     pageUrl = '/role/list'
+      //     break
+      // }
 
-      // 1.对页面发送请求
+      // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
-      //3.将数据存储进state中
+
+      // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data
 
-      switch (pageName) {
-        case 'user':
-          commit(`changeUserList`, list)
-          commit(`changeUserCount`, totalCount)
-          break
-        case 'role':
-          commit(`change${pageName.toUpperCase()}List`, list)
-          commit(`change${pageName.toUpperCase()}Count`, totalCount)
-          break
-      }
+      const changePageName =
+        pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
+      commit(`change${changePageName}List`, list)
+      commit(`change${changePageName}Count`, totalCount)
+
+      // switch (pageName) {
+      //   case 'users':
+      //     commit(`changeUserList`, list)
+      //     commit(`changeUserCount`, totalCount)
+      //     break
+      //   case 'role':
+      //     commit(`changeRoleList`, list)
+      //     commit(`changeRoleCount`, totalCount)
+      //     break
+      // }
     }
   }
 }
