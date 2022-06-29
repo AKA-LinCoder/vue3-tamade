@@ -29,7 +29,11 @@
         width="80"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column
+          v-bind="propItem"
+          align="center"
+          show-overflow-tooltip="true"
+        >
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
