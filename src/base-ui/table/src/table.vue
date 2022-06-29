@@ -10,10 +10,10 @@
     </div>
     <el-table
       :data="listData"
-      :dataCount="dataCount"
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
     >
       <el-table-column
         v-if="showSelectColumn"
@@ -29,11 +29,7 @@
         width="80"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column
-          v-bind="propItem"
-          align="center"
-          show-overflow-tooltip="true"
-        >
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -42,14 +38,14 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="page.currentPage"
-          :page-sizes="[10, 20, 30, 40]"
           :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
           :total="listCount"
         >
@@ -68,13 +64,13 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    listCount: {
-      type: Number,
-      default: 0
-    },
     listData: {
       type: Array,
       required: true
+    },
+    listCount: {
+      type: Number,
+      default: 0
     },
     propList: {
       type: Array,
@@ -91,6 +87,14 @@ export default defineComponent({
     page: {
       type: Object,
       default: () => ({ currentPage: 0, pageSize: 10 })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['selectionChange', 'update:page'],
@@ -98,17 +102,19 @@ export default defineComponent({
     const handleSelectionChange = (value: any) => {
       emit('selectionChange', value)
     }
+
     const handleCurrentChange = (currentPage: number) => {
       emit('update:page', { ...props.page, currentPage })
     }
+
     const handleSizeChange = (pageSize: number) => {
       emit('update:page', { ...props.page, pageSize })
     }
 
     return {
       handleSelectionChange,
-      handleSizeChange,
-      handleCurrentChange
+      handleCurrentChange,
+      handleSizeChange
     }
   }
 })
@@ -134,8 +140,9 @@ export default defineComponent({
 
 .footer {
   margin-top: 15px;
-}
-.el-pagination {
-  text-align: right;
+
+  .el-pagination {
+    text-align: right;
+  }
 }
 </style>
