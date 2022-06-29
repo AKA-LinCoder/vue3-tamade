@@ -1,29 +1,47 @@
 <template>
   <div class="user">
-    <pageSearch :search-form-config="searchFormConfig"></pageSearch>
-    <pageContent page-name="users" :content-table-config="contentTableConfig">
-    </pageContent>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @query-btn-click="handleQueryClick"
+      @reset-btn-click="handleResetClick"
+    />
+    <page-content
+      ref="pageContentRef"
+      :contentTableConfig="contentTableConfig"
+      pageName="users"
+    ></page-content>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import PageSearch from '@/components/page-search'
+import PageContent from '@/components/page-content'
+
 import { searchFormConfig } from './config/search.config'
 import { contentTableConfig } from './config/content.config'
-import pageSearch from '@/components/page-search'
-import pageContent from '@/components/page-content'
+
+import { usePageSearch } from '@/hooks/use-page-search'
 
 export default defineComponent({
   name: 'users',
-  components: { pageSearch, pageContent },
+  components: {
+    PageSearch,
+    PageContent
+  },
   setup() {
+    const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+
     return {
       searchFormConfig,
-      contentTableConfig
+      contentTableConfig,
+      pageContentRef,
+      handleResetClick,
+      handleQueryClick
     }
   }
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped></style>

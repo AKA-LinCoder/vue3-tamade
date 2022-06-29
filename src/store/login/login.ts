@@ -1,15 +1,19 @@
 import { Module } from 'vuex'
-import { ILoginState } from './type'
-import { IRootState } from '../type'
+
 import {
   accountLoginRequest,
   requestUserInfoById,
   requestUserMenusByRoleId
 } from '@/service/login/login'
-import { IAccount } from '@/service/login/type'
 import localCache from '@/utils/cache'
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 import router from '@/router'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+
+import { IAccount } from '@/service/login/type'
+// import { ILoginState } from './types'
+// import { IRootState } from '../types'
+import { ILoginState } from './type'
+import { IRootState } from '../type'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -17,9 +21,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
+  getters: {},
   mutations: {
     changeToken(state, token: string) {
       state.token = token
@@ -29,24 +35,30 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-      //userMenus=>routes
+
+      console.log('注册动态路由')
+
+      // userMenus => routes
       const routes = mapMenusToRoutes(userMenus)
+
       // 将routes => router.main.children
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      // 获取用户按钮的权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
-  getters: {},
   actions: {
     async accountLoginAction({ commit }, payload: IAccount) {
-      console.log('联网登录 ', payload)
-      //1.实现登录逻辑
-      const loginRequest = await accountLoginRequest(payload)
-      console.log(loginRequest.data.token)
-      const { id, token } = loginRequest.data
+      // 1.实现登录逻辑
+      const loginResult = await accountLoginRequest(payload)
+      const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+
       // 2.请求用户信息
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
@@ -58,6 +70,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       const userMenus = userMenusResult.data
       commit('changeUserMenus', userMenus)
       localCache.setCache('userMenus', userMenus)
+
       // 4.跳到首页
       router.push('/main')
     },
@@ -77,4 +90,5 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   }
 }
+
 export default loginModule
