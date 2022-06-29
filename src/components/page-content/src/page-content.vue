@@ -29,7 +29,7 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
           <el-button
             v-if="isUpdate"
@@ -43,6 +43,7 @@
             icon="el-icon-delete"
             size="small"
             type="text"
+            @click="handyDeletedClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -93,7 +94,7 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, 'query')
 
     // 1.双向绑定pageInfo
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     // 2.发送网络请求
@@ -102,7 +103,7 @@ export default defineComponent({
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -129,6 +130,14 @@ export default defineComponent({
       }
     )
 
+    //5.删除
+    const handyDeletedClick = (item: any) => {
+      console.log('删除')
+      store.dispatch('system/deletePageDataAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
     return {
       dataList,
       getPageData,
@@ -137,7 +146,8 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      handyDeletedClick
     }
   }
 })
