@@ -6,7 +6,7 @@ const path = require('path')
 
 module.exports = {
   //直接通过CLI提供给我们的选项来配置
-  outputDir: './build',
+  outputDir: 'build',
   //解决跨域问题
   devServer: {
     proxy: {
