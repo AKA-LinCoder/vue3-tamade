@@ -35,7 +35,8 @@ import {
   ElConfigProvider,
   ElImage,
   ElDialog,
-  ElTree
+  ElTree,
+  ElCard
 } from 'element-plus/lib/index'
 import { Fold, Expand } from '@element-plus/icons-vue'
 
@@ -77,7 +78,8 @@ const components = [
   ElConfigProvider,
   ElImage,
   ElDialog,
-  ElTree
+  ElTree,
+  ElCard
 ]
 
 export default function (app: App): void {
